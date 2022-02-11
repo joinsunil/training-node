@@ -1,0 +1,29 @@
+{
+  "name": "react-training",
+  "version": "1.0.0",
+  "description": "training app",
+  "scripts": {
+    "start": "webpack-dev-server --mode development",
+    "build-dev": "npm run copycss && ./node_modules/.bin/webpack --config webpack.config.js --watch --mode development",
+    "copycss":"copyfiles -a ./src/main.css out ./public/css"
+  },
+  "keywords": [
+    "webpack",
+    "react"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/preset-env": "^7.16.7",
+    "@babel/preset-react": "^7.16.7",
+    "babel-loader": "^8.2.3",
+    "copyfiles": "^2.4.1",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.7.2"
+  },
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "webpack": "^5.65.0"
+  }
+}
