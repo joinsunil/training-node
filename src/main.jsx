@@ -1,57 +1,63 @@
 
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 import Thumbnail from './components/thumbnail';
-import {getMovList} from './api'
+import MovieDetail from './movieDetail';
 
-const movArray = [
-    {
-        id: 1,
-        title: 'Mov 1',
-        rating: '3.5'
-    },
-    {
-        id: 2,
-        title: 'Mov 2',
-        rating: '5.5'
-    },
-    {
-        id: 3, 
-        title: 'Mov 3',
-        rating: '7.5'
-    },
-    {
-        id: 4,
-        title: 'Mov 4',
-        rating: '4.5'
-    }
-]
-
+import {getMovList, getMovieDetail} from './api'
 
 
 const Main = () => {
+
+    const [movies, setMovies] = useState([]);
+    const [movieId, setMovieId] = useState(null);
+
     const onThumbnailClick = (e, data) =>{
         console.log('clicked.', data, e);
         // api call to server with id
+        setMovieId(data.id)
     }
 
     useEffect(()=>{
         // just after app get mounted.
         // api call - 
+        getMovList()
+        .then(res=>res.json())
+        .then(res=>{
+            console.log('res', res)
+            setMovies(res.results)
+        })
+        .catch(err=>{
+            console.log(err);
+        })
+
     },[])
-    
+
 
     return (
-        <ol>
-        {
-            movArray.map(item=>{
-                return (
-                    <Thumbnail {...item} onClick={onThumbnailClick}/>
-                )
-            })
-        }
-        </ol>
+        <>
+            {
+                movieId && 
+                <div>
+                    <p>-- Details --</p>
+                    <MovieDetail id={movieId}/>
+                </div>
+            }
+            <div>
+                {!movies.length && <>Loading...</>}
+                <ol className='ol-list'>
+                {
+                    movies.map(item=>{
+                        return (
+                            <Thumbnail {...item} onClick={onThumbnailClick}/>
+                        )
+                    })
+                }
+                </ol>
+            </div>
+        </>
+
     )
 }
 

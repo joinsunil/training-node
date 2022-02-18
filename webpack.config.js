@@ -14,6 +14,7 @@ const config = {
         compress: true,
         port: 9000,
     },
+    devtool:'inline-source-map',
     module: {
         rules: [
             {
